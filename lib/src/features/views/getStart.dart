@@ -56,7 +56,7 @@ class _GetStartState extends State<GetStart> {
               child: Image(image: AssetImage(ImagePath.logo2)),
             ),
             Expanded(
-              flex: 4,
+              flex: 5,
               child: PageView(
                 controller: controller,
                 onPageChanged: onPressedList,
