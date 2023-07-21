@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/src/constants/imagePath.dart';
 import 'package:foodapp/src/constants/colors.dart';
-import 'package:foodapp/src/features/depends/customButton.dart';
+import 'package:foodapp/src/features/depends/customGetStartPages.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../depends/customHomePages.dart';
 import 'homePage.dart';
@@ -16,6 +17,7 @@ class GetStart extends StatefulWidget {
 class _GetStartState extends State<GetStart> {
   List<bool> listSelect = [true, false, false];
   late final PageController controller;
+  ValueNotifier<int> pageIndex =ValueNotifier<int>(0);
 
   @override
   void initState() {
@@ -30,8 +32,10 @@ class _GetStartState extends State<GetStart> {
   }
 
   void onPressedList(int a) {
-    controller.jumpToPage(
-      a,
+    controller.animateToPage(
+      pageIndex.value,
+      curve: Curves.linear,
+      duration: Duration(milliseconds: 200),
     );
     setState(() {
       for (int i = 0; i < listSelect.length; i++) {
@@ -56,60 +60,8 @@ class _GetStartState extends State<GetStart> {
               child: Image(image: AssetImage(ImagePath.logo2)),
             ),
             Expanded(
-              flex: 5,
-              child: PageView(
-                controller: controller,
-                onPageChanged: onPressedList,
-                scrollDirection: Axis.horizontal,
-                physics: const ScrollPhysics(),
-                children: const [
-                  CustomHomePages(
-                    image: ImagePath.image1,
-                    text1: "Eat Healthy",
-                    text2:
-                        "Maintaining good health should be the \nprimary focus of everyone.",
-                  ),
-                  CustomHomePages(
-                    image: ImagePath.image2,
-                    text1: "Healthy Recipes",
-                    text2:
-                        "Browse thousands of healthy recipes \nfrom all over the world.",
-                  ),
-                  CustomHomePages(
-                    image: ImagePath.image3,
-                    text1: "Track Your Health",
-                    text2:
-                        "With amazing inbuilt tools you can track \nyour progress.",
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomButton(
-                        listSelect: listSelect,
-                        onPressedList: onPressedList,
-                        a: 0,
-                      ),
-                      CustomButton(
-                        listSelect: listSelect,
-                        onPressedList: onPressedList,
-                        a: 1,
-                      ),
-                      CustomButton(
-                        listSelect: listSelect,
-                        onPressedList: onPressedList,
-                        a: 2,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              flex: 6,
+              child: CustomGetStartPages(),
             ),
             Expanded(
               flex: 2,
